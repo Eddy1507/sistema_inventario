@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title> INVENTARIO EMYE </title>
+
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <!-- DataTables -->
+
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+
+
+    <!-- Select2 -->
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+
+
+    <!-- CSS propio -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+
+</head>
+
+
+
+<body>
+
+
+<div class="d-flex">
+
+
+
+    <!-- =======================
+         SIDEBAR
+    ======================== -->
+
+
+    <div class="sidebar">
+
+
+        <div class="text-center mt-3">
+
+
+    {% if empresa and empresa.logo %}
+
+    <img
+
+    src="{{ url_for('static', filename=empresa.logo) }}"
+
+    style="width:120px;height:120px;object-fit:contain;"
+
+    class="mb-2">
+
+
+    {% endif %}
+
+
+
+    <h4 class="text-white">
+
+
+        {% if empresa %}
+
+            {{ empresa.nombre }}
+
+        {% else %}
+
+            EMYE CUU
+
+        {% endif %}
+
+
+    </h4>
+
+
+</div>
+
+
+
+        <hr>
+
+        
+
+
+        <a href="/">
+
+            <i class="bi bi-speedometer2"></i>
+
+            Menu
+
+        </a>
+
+
+
+
+        <a href="/productos">
+
+            <i class="bi bi-box-seam"></i>
+
+            Productos
+
+        </a>
+
+
+
+
+        <a href="/ventas">
+
+            <i class="bi bi-cart"></i>
+
+            Ventas
+
+        </a>
+
+
+
+
+        <a href="/compras">
+
+            <i class="bi bi-truck"></i>
+
+            Compras
+
+        </a>
+
+
+
+
+        <a href="/clientes">
+
+            <i class="bi bi-people"></i>
+
+            Clientes
+
+        </a>
+
+
+
+
+        <a href="/proveedores">
+
+            <i class="bi bi-building"></i>
+
+            Proveedores
+
+        </a>
+
+
+
+
+        <a href="/kardex">
+
+            <i class="bi bi-clock-history"></i>
+
+            Kardex
+
+        </a>
+
+
+
+
+        <a href="/reportes">
+
+            <i class="bi bi-bar-chart"></i>
+
+            Reportes
+
+        </a>
+
+        <a href="/ganancias">
+
+           <i class="bi bi-cash-coin"></i>
+
+         Ganancias
+
+          </a>
+
+
+            <a href="/empresa">
+
+            <i class="bi bi-building-gear"></i>
+
+           Empresa
+
+        </a>
+
+
+        <a href="/respaldo">
+
+            <i class="bi bi-database-check"></i>
+
+            Copia de seguridad
+
+        </a>
+ 
+        
+           <a href="/restaurar">
+
+          <i class="bi bi-arrow-counterclockwise"></i>
+
+         Restaurar respaldo
+
+           </a>
+
+
+
+    </div>
+
+
+
+
+
+
+    <!-- =======================
+         CONTENIDO
+    ======================== -->
+
+
+    <div class="contenido">
+
+
+
+        <nav class="navbar bg-white shadow-sm mb-4">
+
+
+            <div class="container-fluid">
+
+
+                <span class="navbar-brand">
+
+                    INVENTARIO EMYE
+
+                </span>
+
+
+            </div>
+
+
+        </nav>
+
+
+
+
+
+        <!-- MENSAJES DEL SISTEMA -->
+
+
+        {% with mensajes = get_flashed_messages(with_categories=true) %}
+
+
+        {% if mensajes %}
+
+
+        {% for categoria, mensaje in mensajes %}
+
+
+        <div class="alert alert-{{ categoria }} alert-dismissible fade show">
+
+
+            {{ mensaje }}
+
+
+            <button 
+                type="button" 
+                class="btn-close" 
+                data-bs-dismiss="alert">
+            </button>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+        {% endif %}
+
+
+        {% endwith %}
+
+
+
+
+
+        {% block contenido %}
+
+        {% endblock %}
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+<!-- =======================
+     LIBRERÍAS JS
+======================== -->
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
+
+<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
+
+{% block scripts %}
+
+{% endblock %}
+
+
+
+
+</body>
+
+
+</html>
+

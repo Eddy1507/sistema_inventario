@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h2>
+
+{% if cliente %}
+
+Editar Cliente
+
+{% else %}
+
+Nuevo Cliente
+
+{% endif %}
+
+</h2>
+
+<hr>
+
+<form method="POST">
+
+    <div class="mb-3">
+
+        <label>Nombre</label>
+
+        <input
+            type="text"
+            name="nombre"
+            class="form-control"
+            value="{{ cliente.nombre if cliente else '' }}"
+            required>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label>Teléfono</label>
+
+        <input
+            type="text"
+            name="telefono"
+            class="form-control"
+            value="{{ cliente.telefono if cliente else '' }}">
+
+    </div>
+
+    <div class="mb-3">
+
+        <label>Correo</label>
+
+        <input
+            type="email"
+            name="correo"
+            class="form-control"
+            value="{{ cliente.correo if cliente else '' }}">
+
+    </div>
+
+    <button class="btn btn-success">
+        Guardar
+    </button>
+
+    <a href="/clientes" class="btn btn-secondary">
+        Cancelar
+    </a>
+
+</form>
+
+{% endblock %}

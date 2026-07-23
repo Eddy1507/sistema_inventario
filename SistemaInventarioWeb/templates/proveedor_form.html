@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h2>
+
+{% if proveedor %}
+
+Editar Proveedor
+
+{% else %}
+
+Nuevo Proveedor
+
+{% endif %}
+
+</h2>
+
+<hr>
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label>Nombre</label>
+
+<input
+type="text"
+name="nombre"
+class="form-control"
+value="{{ proveedor.nombre if proveedor else '' }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>Teléfono</label>
+
+<input
+type="text"
+name="telefono"
+class="form-control"
+value="{{ proveedor.telefono if proveedor else '' }}">
+
+</div>
+
+<div class="mb-3">
+
+<label>Correo</label>
+
+<input
+type="email"
+name="correo"
+class="form-control"
+value="{{ proveedor.correo if proveedor else '' }}">
+
+</div>
+
+<button class="btn btn-success">
+
+Guardar
+
+</button>
+
+<a href="/proveedores"
+class="btn btn-secondary">
+
+Cancelar
+
+</a>
+
+</form>
+
+{% endblock %}

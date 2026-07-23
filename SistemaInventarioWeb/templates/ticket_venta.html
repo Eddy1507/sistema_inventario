@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+
+
+{% block contenido %}
+
+
+<div class="card shadow p-4" style="max-width:600px;margin:auto;">
+
+
+<div class="text-center">
+
+
+{% if empresa %}
+
+
+    {% if empresa.logo %}
+
+    <img
+    src="{{ url_for('static', filename=empresa.logo) }}"
+    style="width:120px;height:120px;object-fit:contain;"
+    class="mb-3">
+
+    {% endif %}
+
+
+
+    <h2>
+        {{ empresa.nombre }}
+    </h2>
+
+
+    <p>
+
+        {{ empresa.direccion }}
+
+        <br>
+
+        Tel: {{ empresa.telefono }}
+
+        <br>
+
+        {{ empresa.correo }}
+
+        <br>
+
+        RFC: {{ empresa.rfc }}
+
+    </p>
+
+
+{% else %}
+
+
+    <h2>
+        EMYE CORPORATION
+    </h2>
+
+
+{% endif %}
+
+
+
+<h5>
+Ticket de venta
+</h5>
+
+
+<hr>
+
+
+</div>
+
+
+
+<p>
+<strong>Folio:</strong>
+{{ venta.id }}
+</p>
+
+
+<p>
+<strong>Fecha:</strong>
+{{ venta.fecha.strftime('%d/%m/%Y %H:%M') }}
+</p>
+
+
+<p>
+<strong>Cliente:</strong>
+{{ venta.cliente.nombre }}
+</p>
+
+
+<hr>
+
+
+
+<table class="table table-bordered">
+
+
+<thead class="table-dark">
+
+<tr>
+
+<th>
+Producto
+</th>
+
+<th>
+Cantidad
+</th>
+
+<th>
+Precio
+</th>
+
+<th>
+Subtotal
+</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for detalle in venta.detalles %}
+
+
+<tr>
+
+<td>
+{{ detalle.producto.nombre }}
+</td>
+
+
+<td>
+{{ detalle.cantidad }}
+</td>
+
+
+<td>
+${{ "%.2f"|format(detalle.precio) }}
+</td>
+
+
+<td>
+${{ "%.2f"|format(detalle.subtotal) }}
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+
+<h3 class="text-end">
+
+Total:
+
+${{ "%.2f"|format(venta.total) }}
+
+</h3>
+
+
+
+<div class="text-center mt-4">
+
+
+<button
+onclick="window.print()"
+class="btn btn-primary">
+
+<i class="bi bi-printer"></i>
+
+Imprimir
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+{% endblock %}

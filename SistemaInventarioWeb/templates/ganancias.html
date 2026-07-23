@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h2 class="mb-4">
+    Ganancias
+</h2>
+
+<div class="row g-3">
+
+    <div class="col-md-3">
+
+        <div class="card bg-primary text-white shadow">
+
+            <div class="card-body text-center">
+
+                <h6>Valor al Costo</h6>
+
+                <h3>${{ "%.2f"|format(total_costo) }}</h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card bg-success text-white shadow">
+
+            <div class="card-body text-center">
+
+                <h6>Valor de Venta</h6>
+
+                <h3>${{ "%.2f"|format(total_venta) }}</h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card bg-warning shadow">
+
+            <div class="card-body text-center">
+
+                <h6>Utilidad Potencial</h6>
+
+                <h3>${{ "%.2f"|format(utilidad_total) }}</h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card bg-danger text-white shadow">
+
+            <div class="card-body text-center">
+
+                <h6>Margen</h6>
+
+                <h3>{{ "%.2f"|format(margen) }}%</h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+
+<div class="card shadow">
+
+    <div class="card-header bg-dark text-white">
+
+        Ganancia por Producto
+
+    </div>
+
+    <div class="card-body">
+
+        <table
+            id="tablaGanancias"
+            class="table table-striped table-hover">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Código</th>
+                    <th>Producto</th>
+                    <th>Costo</th>
+                    <th>Precio Venta</th>
+                    <th>Ganancia</th>
+                    <th>Stock</th>
+                    <th>Valor Inventario</th>
+                    <th>Utilidad Inventario</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for p in productos %}
+
+                <tr>
+
+                    <td>{{ p.codigo }}</td>
+
+                    <td>{{ p.nombre }}</td>
+
+                    <td>${{ "%.2f"|format(p.costo) }}</td>
+
+                    <td>${{ "%.2f"|format(p.precio) }}</td>
+
+                    <td>
+
+                        <span class="badge bg-success">
+
+                            ${{ "%.2f"|format(p.utilidad) }}
+
+                        </span>
+
+                    </td>
+
+                    <td>{{ p.stock }}</td>
+
+                    <td>
+
+                        ${{ "%.2f"|format(p.valor_stock) }}
+
+                    </td>
+
+                    <td>
+
+                        <strong>
+
+                            ${{ "%.2f"|format(p.utilidad_stock) }}
+
+                        </strong>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<br>
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+
+        Utilidad por Producto
+
+    </div>
+
+    <div class="card-body">
+
+        <canvas
+            id="graficaGanancias"
+            style="height:350px;">
+        </canvas>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const nombres = JSON.parse('{{ labels | tojson | safe }}');
+
+const ganancias = JSON.parse('{{ datos | tojson | safe }}');
+
+
+new Chart(
+
+    document.getElementById("graficaGanancias"),
+
+    {
+
+        type: "bar",
+
+        data: {
+
+            labels: nombres,
+
+            datasets: [{
+
+                label: "Ganancia por unidad",
+
+                data: ganancias
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false
+
+        }
+
+    }
+
+);
+
+$(document).ready(function(){
+
+    $("#tablaGanancias").DataTable({
+
+        pageLength:10,
+
+        order:[[1,"asc"]],
+
+        language:{
+
+            search:"Buscar:",
+
+            lengthMenu:"Mostrar _MENU_ registros",
+
+            info:"Mostrando _START_ a _END_ de _TOTAL_ registros",
+
+            zeroRecords:"No se encontraron registros",
+
+            paginate:{
+
+                previous:"Anterior",
+
+                next:"Siguiente"
+
+            }
+
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

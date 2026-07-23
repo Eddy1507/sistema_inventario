@@ -1,0 +1,123 @@
+    {% extends 'base.html' %}
+
+{% block contenido %}
+
+<h2>Detalle de la Compra #{{ compra.id }}</h2>
+
+<hr>
+
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <strong>Proveedor:</strong><br>
+
+                {{ compra.proveedor.nombre }}
+
+            </div>
+
+            <div class="col-md-4">
+
+                <strong>Fecha:</strong><br>
+
+                {{ compra.fecha.strftime('%d/%m/%Y %H:%M') }}
+
+            </div>
+
+            <div class="col-md-4">
+
+                <strong>Total:</strong><br>
+
+                <h4 class="text-success">
+
+                    ${{ "%.2f"|format(compra.total) }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<table class="table table-bordered table-hover">
+
+    <thead class="table-dark">
+
+        <tr>
+
+            <th>Código</th>
+            <th>Producto</th>
+            <th>Costo</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for detalle in compra.detalles %}
+
+        <tr>
+
+            <td>
+
+                {{ detalle.producto.codigo }}
+
+            </td>
+
+            <td>
+
+                {{ detalle.producto.nombre }}
+
+            </td>
+
+            <td>
+
+                ${{ "%.2f"|format(detalle.costo) }}
+
+            </td>
+
+            <td>
+
+                {{ detalle.cantidad }}
+
+            </td>
+
+            <td>
+
+                ${{ "%.2f"|format(detalle.subtotal) }}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+<div class="mt-4">
+
+    <a
+        href="/compras"
+        class="btn btn-secondary">
+
+        <i class="bi bi-arrow-left"></i>
+
+        Regresar
+
+    </a>
+
+</div>
+
+{% endblock %}

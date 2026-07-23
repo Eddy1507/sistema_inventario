@@ -1,0 +1,677 @@
+{% extends 'base.html' %}
+
+
+{% block contenido %}
+
+<h2 class="mb-4">
+    Dashboard
+</h2>
+
+
+
+<!-- ==========================
+     TARJETAS PRINCIPALES
+========================== -->
+
+<div class="row g-3">
+
+
+    <div class="col-md-2">
+        <div class="card bg-primary text-white shadow">
+            <div class="card-body text-center">
+
+                <h6>Productos</h6>
+                <h2>{{ total_productos }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-2">
+        <div class="card bg-success text-white shadow">
+            <div class="card-body text-center">
+
+                <h6>Clientes</h6>
+                <h2>{{ total_clientes }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-2">
+        <div class="card bg-info text-white shadow">
+            <div class="card-body text-center">
+
+                <h6>Proveedores</h6>
+                <h2>{{ total_proveedores }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-2">
+        <div class="card bg-warning shadow">
+            <div class="card-body text-center">
+
+                <h6>Ventas</h6>
+                <h2>{{ total_ventas }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-2">
+        <div class="card bg-secondary text-white shadow">
+            <div class="card-body text-center">
+
+                <h6>Compras</h6>
+                <h2>{{ total_compras }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-2">
+        <div class="card bg-danger text-white shadow">
+            <div class="card-body text-center">
+
+                <h6>Inventario</h6>
+                <h2>{{ inventario_total }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<br>
+
+
+
+<!-- ==========================
+     RESUMEN FINANCIERO
+========================== -->
+
+
+<div class="row g-3">
+
+
+    <div class="col-md-4">
+
+        <div class="card bg-dark text-white shadow">
+
+            <div class="card-body text-center">
+
+                <h6>Total vendido</h6>
+
+                <h2>
+                    ${{ "%.2f"|format(dinero_ventas) }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="col-md-4">
+
+        <div class="card bg-success text-white shadow">
+
+            <div class="card-body text-center">
+
+                <h6>Total comprado</h6>
+
+                <h2>
+                    ${{ "%.2f"|format(dinero_compras) }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="col-md-4">
+
+        <div class="card bg-danger text-white shadow">
+
+            <div class="card-body text-center">
+
+                <h6>Productos con stock bajo</h6>
+
+                <h2>
+                    {{ productos_bajo_cantidad }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<br>
+
+
+
+<!-- ==========================
+     GRAFICAS
+========================== -->
+
+
+<div class="row">
+
+
+    <div class="col-md-6">
+
+
+        <div class="card shadow">
+
+
+            <div class="card-header bg-primary text-white">
+
+                Estadísticas de Ventas
+
+            </div>
+
+
+
+            <div class="card-body">
+
+
+                <canvas id="graficaVentas"
+                style="height:300px;"></canvas>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <div class="col-md-6">
+
+
+        <div class="card shadow">
+
+
+            <div class="card-header bg-success text-white">
+
+                Estadísticas de Compras
+
+            </div>
+
+
+
+            <div class="card-body">
+
+
+                <canvas id="graficaCompras"
+                style="height:300px;"></canvas>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<br>
+
+
+
+<!-- ==========================
+     PRODUCTOS STOCK BAJO
+========================== -->
+
+
+<div class="row">
+
+
+<div class="col-md-6">
+
+
+<div class="card shadow">
+
+
+<div class="card-header bg-danger text-white">
+
+Productos con poco stock
+
+</div>
+
+
+
+<table class="table table-hover mb-0">
+
+
+<thead>
+
+<tr>
+
+<th>Código</th>
+
+<th>Producto</th>
+
+<th>Stock</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for producto in productos_stock_bajo %}
+
+
+<tr>
+
+
+<td>{{ producto.codigo }}</td>
+
+
+<td>{{ producto.nombre }}</td>
+
+
+<td>
+
+<span class="badge bg-danger">
+
+{{ producto.stock }}
+
+</span>
+
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="col-md-6">
+
+
+<div class="card shadow">
+
+
+<div class="card-header bg-primary text-white">
+
+Valor del Inventario
+
+</div>
+
+
+
+<div class="card-body text-center">
+
+
+<h1>
+
+${{ "%.2f"|format(valor_inventario) }}
+
+</h1>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<br>
+
+
+
+<!-- ==========================
+     HISTORIALES
+========================== -->
+
+
+<div class="row">
+
+
+<div class="col-md-6">
+
+
+<div class="card shadow">
+
+
+<div class="card-header bg-primary text-white">
+
+Últimas Ventas
+
+</div>
+
+
+
+<table class="table table-striped">
+
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Cliente</th>
+
+<th>Total</th>
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for venta in ultimas_ventas %}
+
+
+<tr>
+
+
+<td>{{ venta.id }}</td>
+
+
+<td>{{ venta.cliente.nombre }}</td>
+
+
+<td>
+
+${{ "%.2f"|format(venta.total) }}
+
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="col-md-6">
+
+
+<div class="card shadow">
+
+
+<div class="card-header bg-secondary text-white">
+
+Últimas Compras
+
+</div>
+
+
+
+<table class="table table-striped">
+
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Proveedor</th>
+
+<th>Total</th>
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for compra in ultimas_compras %}
+
+
+<tr>
+
+
+<td>{{ compra.id }}</td>
+
+
+<td>{{ compra.proveedor.nombre }}</td>
+
+
+<td>
+
+${{ "%.2f"|format(compra.total) }}
+
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+{% endblock %}
+
+
+
+
+
+{% block scripts %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+
+const TotalVentas = {{ ventas | tojson }};
+
+const TotalCompras = {{ compras | tojson }};
+
+const TotalProductos = {{ productos | tojson }};
+
+const TotalClientes = {{ clientes | tojson }};
+
+
+
+new Chart(
+
+document.getElementById("graficaVentas"),
+
+{
+
+type:"bar",
+
+data:{
+
+labels:[
+
+"Ventas",
+
+"Clientes"
+
+],
+
+datasets:[{
+
+label:"Cantidad",
+
+data:[
+
+TotalVentas,
+
+TotalClientes
+
+]
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false
+
+}
+
+}
+
+);
+
+
+
+
+
+new Chart(
+
+document.getElementById("graficaCompras"),
+
+{
+
+type:"doughnut",
+
+data:{
+
+labels:[
+
+"Compras",
+
+"Productos"
+
+],
+
+datasets:[{
+
+data:[
+
+TotalCompras,
+
+TotalProductos
+
+]
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false
+
+}
+
+}
+
+);
+
+
+
+</script>
+
+
+{% endblock %}

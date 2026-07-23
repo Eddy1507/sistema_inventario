@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+
+{% block contenido %}
+
+
+<h2 class="mb-4">
+
+Restaurar respaldo
+
+</h2>
+
+
+
+<div class="card shadow">
+
+
+<div class="card-body">
+
+
+<form method="POST" action="/restaurar/ejecutar">
+
+
+
+<label class="form-label">
+
+Selecciona un respaldo:
+
+</label>
+
+
+
+<select name="archivo" class="form-select">
+
+
+{% for archivo in archivos %}
+
+
+<option value="{{ archivo.nombre }}">
+
+{{ archivo.nombre }}
+
+-
+{{ archivo.fecha.strftime('%d/%m/%Y %H:%M') }}
+
+{% if loop.first %}
+
+(ÚLTIMO RESPALDO)
+
+{% endif %}
+
+
+</option>
+
+
+{% endfor %}
+
+
+</select>
+
+
+
+
+<br>
+
+
+
+<button class="btn btn-danger">
+
+<i class="bi bi-arrow-counterclockwise"></i>
+
+Restaurar respaldo
+
+</button>
+
+
+
+</form>
+
+
+
+</div>
+
+
+</div>
+
+
+{% endblock %}

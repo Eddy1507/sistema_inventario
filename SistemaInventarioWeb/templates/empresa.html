@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h2 class="mb-4">
+    Configuración de Empresa
+</h2>
+
+
+<div class="card shadow">
+
+
+    <div class="card-header bg-primary text-white">
+
+        <i class="bi bi-building"></i>
+        Datos de la Empresa
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <!-- LOGO -->
+
+        {% if empresa.logo %}
+
+<div class="text-center mb-4">
+
+    <img 
+    src="/static/{{ empresa.logo }}"
+    class="img-thumbnail"
+    style="width:180px; height:180px; object-fit:contain;">
+
+</div>
+
+{% endif %}
+
+
+
+
+
+        <form method="POST">
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Nombre de la empresa
+                </label>
+
+                <input
+                type="text"
+                class="form-control"
+                name="nombre"
+                value="{{ empresa.nombre }}"
+                required>
+
+            </div>
+
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Dirección
+                </label>
+
+                <input
+                type="text"
+                class="form-control"
+                name="direccion"
+                value="{{ empresa.direccion or '' }}">
+
+            </div>
+
+
+
+
+            <div class="row">
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Teléfono
+                    </label>
+
+                    <input
+                    type="text"
+                    class="form-control"
+                    name="telefono"
+                    value="{{ empresa.telefono or '' }}">
+
+                </div>
+
+
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Correo electrónico
+                    </label>
+
+                    <input
+                    type="email"
+                    class="form-control"
+                    name="correo"
+                    value="{{ empresa.correo or '' }}">
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <div class="row">
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        RFC
+                    </label>
+
+                    <input
+                    type="text"
+                    class="form-control"
+                    name="rfc"
+                    value="{{ empresa.rfc or '' }}">
+
+                </div>
+
+
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Sitio Web
+                    </label>
+
+                    <input
+                    type="text"
+                    class="form-control"
+                    name="sitio_web"
+                    value="{{ empresa.sitio_web or '' }}">
+
+                </div>
+
+
+            </div>
+
+
+
+
+            <button
+            class="btn btn-success">
+
+                <i class="bi bi-save"></i>
+
+                Guardar Cambios
+
+            </button>
+
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+
